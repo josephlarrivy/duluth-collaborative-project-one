@@ -1,6 +1,6 @@
 
 const jsonschema = require("jsonschema");
-const User = require('../models/User')
+const User = require('../models/users')
 const { createToken } = require("../helpers/tokens");
 const { ExpressError,
   NotFoundError,
@@ -19,12 +19,12 @@ router.get('/test', (req, res, next) => {
 })
 
 
-
-router.post("/register", async function (req, res, next) {
+// creates a new user
+router.post("/", async function (req, res, next) {
   
 });
 
-
+// allows a user to log in
 router.post("/login", async function (req, res, next) {
   
 });

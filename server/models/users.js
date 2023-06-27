@@ -9,7 +9,7 @@ const { ExpressError, NotFoundError, UnauthorizedError, BadRequestError, Forbidd
 
 class User {
 
-  static async register(
+  static async create(
     { username, password, firstName, lastName, email }) {
     
   }
