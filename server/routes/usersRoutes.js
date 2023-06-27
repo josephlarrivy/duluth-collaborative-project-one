@@ -14,8 +14,13 @@ const router = new express.Router();
 
 
 
-router.get('/test', (req, res, next) => {
-  return res.json({'status':'good connection'})
+router.get('/test/route', (req, res, next) => {
+  return res.json({'status' : 'hitting route'})
+})
+
+router.get('/test/model', (req, res, next) => {
+  const resp = User.test()
+  return res.json({ 'status' : resp })
 })
 
 
