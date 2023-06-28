@@ -8,17 +8,21 @@ const { ExpressError, NotFoundError, UnauthorizedError, BadRequestError, Forbidd
 
 class User {
 
-  static test() {
-    return 'hitting model'
-  }
-
-  static async create(username, password, firstName, lastName, email) {
+  
+  static async create(username, password, first_name, last_name, email) {
     
   }
 
   static async authenticate(username, password) {
     
   }
+
+
+
+  static test() {
+    return 'hitting model'
+  }
+
 }
 
 module.exports = User;

@@ -8,10 +8,10 @@ jest.mock("bcrypt", () => ({
 }));
 
 describe("User Model", () => {
-    describe("test", () => {
-        it("should return 'hitting model'", () => {
-            const result = User.test();
-            expect(result).toEqual("hitting model");
-        });
+  describe("test", () => {
+    it("should return 'hitting model'", () => {
+      const result = User.test();
+      expect(result).toEqual("hitting model");
     });
+  });
 });
