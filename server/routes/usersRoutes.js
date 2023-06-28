@@ -1,4 +1,3 @@
-
 const jsonschema = require("jsonschema");
 const User = require('../models/users')
 const { createToken } = require("../helpers/tokens");
