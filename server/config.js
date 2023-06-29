@@ -6,10 +6,9 @@ const PORT = +process.env.PORT || 3001;
 
 function getDatabaseUri() {
   return (process.env.NODE_ENV === "test")
-    ? "duluth-collaboration-working-db-testing"
-    : process.env.DATABASE_URL || "duluth-collaboration-working-db";
+    ? "postgresql://localhost:5432/duluth-collaboration-working-db-testing"
+    : process.env.DATABASE_URL || "postgresql://localhost:5432/duluth-collaboration-working-db";
 }
-
 
 const BCRYPT_WORK_FACTOR = process.env.NODE_ENV === "test" ? 1 : 12;
 
