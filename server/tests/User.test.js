@@ -42,7 +42,8 @@ describe('User Model', () => {
         .mockResolvedValueOnce({ rows: [testUser] });
 
       const resp = await user.insert(testUser);
-      expect(resp).toEqual(testUser);
+      console.log(resp)
+      expect(resp).toBe(testUser)
     });
   });
 });

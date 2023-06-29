@@ -9,7 +9,7 @@ const { ExpressError, NotFoundError, UnauthorizedError, BadRequestError, Forbidd
 
 class User {
 
-  async insert(username, password, first_name, last_name, email) {
+  async insert({username, password, first_name, last_name, email}) {
     const duplicateCheck = await db.query(
       `SELECT username
            FROM users
@@ -22,11 +22,12 @@ class User {
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
     const result = await db.query(
       `INSERT INTO users
-           (username, password, first_name, last_name, email)
-           VALUES ($1, $2, $3, $4, $5)
-           RETURNING username, firstname AS "firstName", lastname AS "lastName", email`,
-      [username, password, first_name, last_name, email],
+        (username, password, first_name, last_name, email)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING username, firstname AS "firstName", lastname AS "lastName", email`,
+      [username, hashedPassword, first_name, last_name, email],
     );
+
     const user = result.rows[0];
     return user;
   }
