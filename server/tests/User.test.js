@@ -38,8 +38,8 @@ describe('User Model', () => {
       };
 
       db.query
-        .mockResolvedValueOnce({ rows: [] }) // no duplicate user
-        .mockResolvedValueOnce({ rows: [testUser] }); // return the inserted user
+        .mockResolvedValueOnce({ rows: [] })
+        .mockResolvedValueOnce({ rows: [testUser] });
 
       const resp = await user.insert(testUser);
       expect(resp).toEqual(testUser);
