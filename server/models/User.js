@@ -24,7 +24,7 @@ class User {
       `INSERT INTO users
            (username, password, first_name, last_name, email)
            VALUES ($1, $2, $3, $4, $5)
-           RETURNING username, firstname AS "firstName", lastname AS "lastName", email, privilegelevel AS "privilegeLevel"`,
+           RETURNING username, firstname AS "firstName", lastname AS "lastName", email`,
       [username, password, first_name, last_name, email],
     );
     const user = result.rows[0];
