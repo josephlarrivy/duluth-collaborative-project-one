@@ -9,7 +9,7 @@ const { ExpressError, NotFoundError, UnauthorizedError, BadRequestError, Forbidd
 
 class User {
 
-  static async insert(username, password, first_name, last_name, email) {
+  async insert(username, password, first_name, last_name, email) {
     const duplicateCheck = await db.query(
       `SELECT username
            FROM users
@@ -32,13 +32,13 @@ class User {
   }
 
 
-  static async authenticate(username, password) {
+  async authenticate(username, password) {
     
   }
 
 
 
-  static async test() {
+  test() {
     return 'hitting model';
   }
 }

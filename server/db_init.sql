@@ -1,12 +1,14 @@
-CREATE DATABASE duluth_collaboration_working_db_testing;
+-- DROP DATABASE IF EXISTS duluthCollaborationWorkingDBTesting;
+-- CREATE DATABASE duluthCollaborationWorkingDBTesting;
 
-\c duluth_collaboration_working_db_testing;
+\c duluthCollaborationWorkingDBTesting;
+
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
   username VARCHAR(255) PRIMARY KEY,
   password VARCHAR(255) NOT NULL,
   first_name VARCHAR(255) NOT NULL,
   last_name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) UNIQUE NOT NULL,
-  privilegelevel VARCHAR(255) NOT NULL
+  email VARCHAR(255) UNIQUE NOT NULL
 );
