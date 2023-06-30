@@ -1,49 +1,46 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const db = require('../db');
+const pgp = require('pg-promise')();
 
-jest.mock('bcrypt');
-jest.mock('../db');
+let connectionString = 'postgresql://localhost:5432/duluthCollaborationWorkingDBTesting';
+const dbConfig = { connectionString };
+
+let db = pgp(connectionString);
 
 let user;
+let testUser = {
+  username: 'test_username',
+  password: 'test_password',
+  first_name: 'Test',
+  last_name: 'User',
+  email: 'user@test.com'
+};
 
-describe('User Model', () => {
+describe('User Model Integration Tests', () => {
+  beforeAll(async () => {
+    db = pgp(dbConfig);
+  });
+
   beforeEach(() => {
-    user = new User();
+    user = new User(db);
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  afterAll(() => {
-    db.end();
-  });
-
-  describe('test method', () => {
-    it('should call the test method', async () => {
-      const resp = await user.test();
-      expect(resp).toBe('hitting model');
-    });
+  afterAll(async () => {
+    await db.none('DELETE FROM users');
+    await pgp.end();
   });
 
   describe('insert method', () => {
     it('should insert a user into the database', async () => {
-      const testUser = {
+      const insertedUser = await user.insert(testUser);
+
+      expect(insertedUser).toEqual({
         username: 'test_username',
-        password: 'test_password',
         first_name: 'Test',
         last_name: 'User',
-        email: 'user@test.com',
-      };
+        email: 'user@test.com'
+      });
 
-      db.query
-        .mockResolvedValueOnce({ rows: [] })
-        .mockResolvedValueOnce({ rows: [testUser] });
-
-      const resp = await user.insert(testUser);
-      console.log(resp)
-      expect(resp).toBe(testUser)
     });
   });
 });
