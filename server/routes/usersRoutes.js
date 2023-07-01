@@ -33,33 +33,6 @@ router.post("/", async function (req, res, next) {
   }
 });
 
-// gets all users
-router.get("/", async function (req, res, next) {
-  try {
-    const users = await user.getAllUsers()
-    return res.status(200).send(users)
-  } catch (err) {
-    if (err instanceof BadRequestError) {
-      return res.status(400).json({ message: err.message });
-    }
-    return next(err);
-  }
-});
-
-router.delete("/:username", async function (req, res, next) {
-  try {
-    const username = req.params.username;
-    const result = await user.deleteUser(username)
-    console.log(result)
-    return res.status(200).send(result)
-  } catch (err) {
-    if (err instanceof BadRequestError) {
-      return res.status(400).json({ message: err.message });
-    }
-    return next(err)
-  }
-})
-
 // allows a user to log in
 router.post("/login", async function (req, res, next) {
   try {
@@ -76,6 +49,36 @@ router.post("/login", async function (req, res, next) {
     return next(err);
   }
 });
+
+// gets all users
+router.get("/", async function (req, res, next) {
+  try {
+    const users = await user.getAllUsers()
+    return res.status(200).send(users)
+  } catch (err) {
+    if (err instanceof BadRequestError) {
+      return res.status(400).json({ message: err.message });
+    }
+    return next(err);
+  }
+});
+
+// deletes a user
+router.delete("/:username", async function (req, res, next) {
+  try {
+    const username = req.params.username;
+    const result = await user.deleteUser(username)
+    console.log(result)
+    return res.status(200).send(result)
+  } catch (err) {
+    if (err instanceof BadRequestError) {
+      return res.status(400).json({ message: err.message });
+    }
+    return next(err)
+  }
+})
+
+
 
 
 

@@ -56,7 +56,7 @@ class User {
   async getAllUsers() {
     const result = await db.query(
       `SELECT
-      username, password, first_name, last_name, email 
+      username, first_name, last_name, email
       FROM users`
     )
     return result.rows
@@ -64,16 +64,14 @@ class User {
 
   async deleteUser(username) {
     let result = await db.query(
-      `DELETE
-           FROM users
-           WHERE username = $1
-           RETURNING username`,
+      `DELETE FROM users WHERE username = $1 RETURNING username`,
       [username],
     );
     const user = result.rows[0];
     if (!user) throw new NotFoundError(`No user: ${username}`);
     return user
   }
+  
 
   test() {
     return 'hitting model';
