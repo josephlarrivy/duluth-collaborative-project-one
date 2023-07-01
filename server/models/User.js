@@ -9,6 +9,7 @@ const { ExpressError, NotFoundError, UnauthorizedError, BadRequestError, Forbidd
 
 class User {
 
+  // adds a user to the database
   async insert({username, password, first_name, last_name, email}) {
     const duplicateCheck = await db.query(
       `SELECT username
@@ -28,17 +29,51 @@ class User {
       [username, hashedPassword, first_name, last_name, email],
     );
 
-
     const user = result.rows[0];
     return user;
   }
 
-
+  // authenticates a user
   async authenticate(username, password) {
-    
+    const result = await db.query(
+      `SELECT username, password, first_name, last_name, email
+        FROM users
+        WHERE username = $1`,
+      [username],
+    );
+    const user = result.rows[0];
+    if (user) {
+      const isValid = await bcrypt.compare(password, user.password);
+      if (isValid === true) {
+        return user;
+      }
+    } else {
+      throw new UnauthorizedError("Invalid username or password");
+    }
   }
 
+  // gets all users
+  async getAllUsers() {
+    const result = await db.query(
+      `SELECT
+      username, password, first_name, last_name, email 
+      FROM users`
+    )
+    return result.rows
+  }
 
+  async deleteUser(username) {
+    let result = await db.query(
+      `DELETE
+           FROM users
+           WHERE username = $1
+           RETURNING username`,
+      [username],
+    );
+    const user = result.rows[0];
+    if (!user) throw new NotFoundError(`No user: ${username}`);
+    return user
+  }
 
   test() {
     return 'hitting model';
