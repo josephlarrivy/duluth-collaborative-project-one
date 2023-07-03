@@ -68,8 +68,7 @@ router.delete("/:username", async function (req, res, next) {
   try {
     const username = req.params.username;
     const result = await user.deleteUser(username)
-    console.log(result)
-    return res.status(200).send(result)
+    return res.status(200).json({'deleted' : result.username})
   } catch (err) {
     if (err instanceof BadRequestError) {
       return res.status(400).json({ message: err.message });
@@ -94,7 +93,7 @@ router.get('/test/route', (req, res, next) => {
 })
 
 router.get('/test/model', (req, res, next) => {
-  const resp = User.test()
+  const resp = user.test()
   return res.json({ 'status': resp })
 })
 

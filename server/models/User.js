@@ -62,6 +62,7 @@ class User {
     return result.rows
   }
 
+  // deletes a user
   async deleteUser(username) {
     let result = await db.query(
       `DELETE FROM users WHERE username = $1 RETURNING username`,
